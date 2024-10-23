@@ -1,0 +1,106 @@
+server:
+  port: 8761
+
+spring:
+  config:
+    activate:
+      onProfile: default
+  application:
+    name: discovery-server
+
+eureka:
+  instance:
+    hostname: localhost
+    preferIpAddress: true
+    leaseExpirationDurationInSeconds: 30
+    leaseRenewalIntervalInSeconds: 30
+
+  client:
+    fetchRegistry: false
+    registerWithEureka: false
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka
+
+  datacenter: MendeSoft
+  environment: Development
+
+---
+  server:
+    port: 8761
+
+  spring:
+    config:
+      activate:
+        onProfile: profile-01
+    application:
+      name: discovery-server-1
+
+  eureka:
+    instance:
+      hostname: discovery-server-1.mendesoft.xyz
+      preferIpAddress: true
+      leaseExpirationDurationInSeconds: 30
+      leaseRenewalIntervalInSeconds: 30
+
+    client:
+      fetchRegistry: false
+      registerWithEureka: false
+      serviceUrl:
+        defaultZone: http://discovery-server-2.mendesoft.xyz:8762/eureka,http://discovery-server-3.mendesoft.xyz:8763/eureka
+
+    datacenter: MendeSoft
+    environment: Development
+
+---
+    server:
+      port: 8762
+
+    spring:
+      config:
+        activate:
+          onProfile: profile-02
+      application:
+        name: discovery-server-2
+
+    eureka:
+      instance:
+        hostname: discovery-server-2.mendesoft.xyz
+        preferIpAddress: true
+        leaseExpirationDurationInSeconds: 30
+        leaseRenewalIntervalInSeconds: 30
+
+      client:
+        fetchRegistry: false
+        registerWithEureka: false
+        serviceUrl:
+          defaultZone: http://discovery-server-1.mendesoft.xyz:8761/eureka,http://discovery-server-3.mendesoft.xyz:8763/eureka
+
+      datacenter: MendeSoft
+      environment: Development
+---
+
+      server:
+        port: 8763
+
+      spring:
+        config:
+          activate:
+            onProfile: profile-03
+        application:
+          name: discovery-server-3
+
+      eureka:
+        instance:
+          hostname: discovery-server-3.mendesoft.xyz
+          preferIpAddress: true
+          leaseExpirationDurationInSeconds: 30
+          leaseRenewalIntervalInSeconds: 30
+
+        client:
+          fetchRegistry: false
+          registerWithEureka: false
+          serviceUrl:
+            defaultZone: http://discovery-server-1.mendesoft.xyz:8761/eureka,http://discovery-server-2.mendesoft.xyz:8762/eureka
+
+        datacenter: MendeSoft
+        environment: Development

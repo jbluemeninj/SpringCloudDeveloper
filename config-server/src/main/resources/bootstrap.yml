@@ -1,0 +1,31 @@
+server:
+  port: 9000
+
+spring:
+  application:
+    name: config-server
+
+  cloud:
+    config:
+      server:
+        git:
+          uri: https://github.com/mitocode-microservices/course04-mitocode-config-server-files.git
+          defaultLabel: main
+          refreshRate: 30
+          cloneOnStart: true
+          forcePull: true
+          username:
+          password:
+        encrypt:
+          enabled: false
+
+
+eureka:
+  client:
+    fetchRegistry: true
+    registerWithEureka: true
+    serviceUrl:
+      defaultZone: http://discovery-server-1.mendesoft.xyz:8761/eureka
+
+encrypt:
+  key: mendesoft-secret
